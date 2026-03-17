@@ -25,6 +25,11 @@ def health_check(
         }
     }
 
+@router.get("/predict-login-risk", include_in_schema=False)
+async def predict_login_risk_get():
+    """Handle probes/accidental GETs to the login risk endpoint."""
+    return {"status": "error", "message": "Method Not Allowed. Use POST instead."}
+
 @router.post("/predict-login-risk", summary="Predict login risk score")
 async def predict_login_risk(
     request: LoginPredictionRequest,
@@ -52,3 +57,8 @@ async def predict_transaction_fraud(
     except Exception as e:
         print(f"[AI-API] Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/predict-transaction-fraud", include_in_schema=False)
+async def predict_transaction_fraud_get():
+    """Handle probes/accidental GETs to the transaction fraud endpoint."""
+    return {"status": "error", "message": "Method Not Allowed. Use POST instead."}
