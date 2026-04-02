@@ -1,102 +1,74 @@
-# E-commerce Fraud Detection AI
-
-A high-performance microservice providing AI-driven Risk Assessment and Fraud Detection for E-commerce platforms. Built with **FastAPI** and **XGBoost**.
-
-## 🚀 Key Features
-
-### 1. Login Risk Assessment (RBA)
-- Evaluates the risk of login attempts based on user behavior and metadata.
-- Features analyzed: User ID, IP Address, User Agent, Device Type, Country, and RTT (Round Trip Time).
-- Decisions: `passive_auth_allow`, `challenge_otp`, or `block_access`.
-
-### 2. Transaction Fraud Detection
-- Detects fraudulent transactions in real-time.
-- Features analyzed: Total Amount, Quantity, Customer Age, Account Age, Transaction Hour, Payment Method, Product Category, and Device Used.
-- Trained on Kaggle dataset using **SMOTE** for class imbalance handling and **XGBoost** for high accuracy.
-- Decisions: `allow`, `review`, or `block`.
-
-## 🛠 Tech Stack
-- **Framework**: FastAPI (Asynchronous API)
-- **Machine Learning**: XGBoost, Scikit-learn
-- **Data Processing**: Pandas, NumPy
-- **Security**: API Key authentication
-- **Serialization**: Joblib
-
-## 📂 Project Structure
-- `api/`: REST API routing and security.
-- `core/`: Global configuration and settings.
-- `models/`: Pre-trained ML models (`.pkl`).
-- `services/`: Core prediction engine and feature engineering.
-- `scripts/`: Training pipelines and data preparation scripts.
-- `data/`: Raw and processed datasets for training.
-
-## ⚙️ Installation & Setup
-
-### Prerequisites
-- Python 3.9+
-- Virtual Environment (recommended)
-
-### Steps
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/ThanhDat311/E-commerce-AI.git
-   cd E-commerce-AI
-   ```
-
-2. **Setup Virtual Environment**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Run the API**:
-   ```bash
-   python main.py
-   ```
-   The API will be available at `http://localhost:8001/api/v1`.
-
-## 🔒 Authentication
-All API endpoints require an API Key passed in the header:
-- **Header Key**: `X-API-KEY`
-- **Default Value**: `secret-ecommerce-ai-key-2026` (Configure in `core/config.py` or `.env`)
-
-## 📡 API Endpoints
-
-### Login Risk Assessment
-- **POST** `/predict-login-risk`
-- **Payload**:
-  ```json
-  {
-    "user_id": 123,
-    "ip_address": "192.168.1.1",
-    "user_agent": "Mozilla/5.0...",
-    "device_type": "desktop",
-    "country": "US",
-    "rtt_ms": 45
-  }
-  ```
-
-### Transaction Fraud Detection
-- **POST** `/predict-transaction-fraud`
-- **Payload**:
-  ```json
-  {
-    "user_id": 123,
-    "order_id": 456,
-    "total_amount": 250.50,
-    "payment_method": "credit card",
-    "product_category": "electronics",
-    "customer_age": 30
-  }
-  ```
-
-## 🧠 Training New Models
-Scripts for training are located in the `scripts/` directory. You can retrain models by running scripts like `scripts/train_transaction_fraud_model.py` after updating the dataset paths.
+<div align="center">
+  <h1>🧠 AI System: Login Risk & Payment Fraud Detection</h1>
+  <p>
+    <strong>A separate microservice that provides Machine Learning APIs. It connects to the Laravel website to improve security.</strong>
+  </p>
+</div>
 
 ---
-Developed for advanced E-commerce security.
+
+## 📖 About the AI System
+This part solves 2 main AI problems:
+1. **Login Risk Assessment (RBA):** It checks login risk based on behavior (like IP, device, location, and time). It decides to: Allow login (`allow`), Ask for an OTP code (`challenge_otp`), or Block access (`block_access`).
+2. **Transaction Fraud Detection:** It checks purchases to find scams in real-time. It looks at the price, account age, and time. It uses the XGBoost model and the SMOTE algorithm to balance the data.
+
+## 💻 Technology Used
+- **API Server:** FastAPI (Fast and asynchronous)
+- **Machine Learning:** XGBoost, Scikit-learn
+- **Data Working:** Pandas, NumPy
+- **Model Saving:** Joblib
+- **Security:** API Key
+
+---
+
+## 🚀 How to Install and Run
+
+### What You Need:
+- Python >= 3.9
+
+### Setup Steps for the AI System:
+
+**Step 1: Create a Virtual Environment**
+Open your terminal inside the `E-commerce-AI` folder and run this:
+```bash
+python -m venv venv
+```
+
+Start the environment:
+- On **Windows**:
+  ```bash
+  venv\Scripts\activate
+  ```
+- On **macOS/Linux**:
+  ```bash
+  source venv/bin/activate
+  ```
+
+**Step 2: Install Python Libraries**
+We removed the old libraries to save space. Install them again from the `requirements.txt` file:
+```bash
+pip install -r requirements.txt
+```
+
+**Step 3: Start the AI Server**
+Run the server on port 8001:
+```bash
+python main.py
+```
+*(The FastAPI Server will run at `http://localhost:8001`)*
+
+---
+
+## 🔐 API Security (Authentication)
+All API requests need a secret API Key in the Header. The Laravel website automatically sends this key:
+- **Header Key**: `X-API-KEY`
+- **Default Password**: `secret-ecommerce-ai-key-2026`
+
+---
+
+## 📂 Folder Overview
+- `api/`: Holds the FastAPI routes and controllers.
+- `models/`: Holds the trained models (like `.pkl` files).
+- `services/`: Holds the ML logic and feature making code.
+- `scripts/`: Holds the scripts to train new models from data.
+- `data/`: Holds the basic CSV files for training models.

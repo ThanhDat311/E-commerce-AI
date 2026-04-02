@@ -18,6 +18,11 @@ class LoginPredictionRequest(BaseModel):
     device_type: str
     country: str | None = None
     rtt_ms: int | None = None
+    timestamp: str | None = None
+    city: str | None = None
+    device_id: str | None = None
+    is_new_device: bool | None = None
+    recent_failed_attempts: int | None = None
 
 class TransactionPredictionRequest(BaseModel):
     user_id: int
